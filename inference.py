@@ -305,14 +305,19 @@ if __name__ == "__main__":
         num_images_per_prompt=args.num_images_per_prompt, # number of images to generate for each user input
     ).images # return a list of PIL.Image
     
+
+    # save result
+    os.makedirs("./images/results", exist_ok=True) # <--- 加上这一行自动建文件夹
     # save result
     if len(results) == 1: 
         image = results[0] # num_images_per_prompt == 1
         image = post_process(image, input_data['target_size'])
         output_path = f"./images/results/{filename}.jpg"
         save_image(image, output_path)
+        print(f"Saved image: {output_path}")
     else: 
         for i, image in enumerate(results): # num_images_per_prompt > 1
             image = post_process(image, input_data['target_size'])
             output_path = f"./images/results/{filename}_{i}.jpg"
             save_image(image, output_path)
+            print(f"Saved image: {output_path}")
